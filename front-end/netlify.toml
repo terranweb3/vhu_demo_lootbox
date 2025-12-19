@@ -1,0 +1,36 @@
+[build]
+  # Thư mục gốc của project
+  base = "front-end"
+  
+  # Command để build project
+  command = "pnpm install && pnpm run build"
+  
+  # Thư mục chứa file build output
+  publish = "dist"
+
+# Cấu hình cho Single Page Application (SPA)
+# Redirect tất cả requests về index.html để React Router hoạt động
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Cấu hình headers cho security và performance
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Cache static assets
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Environment variables (nếu cần)
+# [build.environment]
+#   NODE_VERSION = "20"
+
